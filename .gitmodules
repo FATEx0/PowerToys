@@ -7,6 +7,3 @@
 [submodule "deps/cziplib"]
 	path = deps/cziplib
 	url = https://github.com/kuba--/zip.git
-[submodule "deps/fmt"]
-	path = deps/fmt
-	url = https://github.com/fmtlib/fmt.git
