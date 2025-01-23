@@ -98,12 +98,14 @@ class system_message {
   unsigned long result_;
   wchar_t* message_;
 
-  static constexpr bool is_whitespace(wstring_view s) {
+  static constexpr bool is_whitespace(wchar_t c) {
+    return c == L' ' || c == L'\t' || c == L'\n' || 
+           c == L'\r' || c == L'\f' || c == L'\v';
+  }
+
+  static constexpr bool contains_whitespace(wstring_view s) {
     for (wchar_t c : s) {
-      if (c == L' ' || c == L'\t' || c == L'\n' || 
-          c == L'\r' || c == L'\f' || c == L'\v') {
-        return true;
-      }
+      if (is_whitespace(c)) return true;
     }
     return false;
   }
