@@ -27,7 +27,7 @@ jobs:
       run: |
        cd deps/fmt
        mkdir build && cd build
-       cmake .. -DFMT_TEST=OFF -DCMAKE_CXX_FLAGS="/EHsc /W0 /analyze-"  # Disable tests, suppress warnings and disable code analysis for {fmt}
+       cmake .. -DFMT_TEST=OFF -DCMAKE_CXX_FLAGS="/std:c++20 /wd26497 /EHsc /W0 /analyze-"  # Disable tests, suppress warnings ,disable code analysis and Enable C++20
        cmake --build . --config Release
 
     - name: Setup MSBuild
