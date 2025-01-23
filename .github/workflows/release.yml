@@ -27,7 +27,7 @@ jobs:
       run: |
        cd deps/fmt
        mkdir build && cd build
-       cmake .. -DFMT_TEST=OFF -DCMAKE_CXX_FLAGS="/W3"  # Disable tests & reduce warning level
+       cmake .. -DFMT_TEST=OFF -DCMAKE_CXX_FLAGS="/EHsc /W0"  # Disable tests & all warning levels
        cmake --build . --config Release
 
     - name: Setup MSBuild
