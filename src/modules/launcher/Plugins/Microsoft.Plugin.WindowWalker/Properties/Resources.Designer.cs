@@ -311,5 +311,13 @@ namespace Microsoft.Plugin.WindowWalker.Properties {
                 return ResourceManager.GetString("wox_plugin_windowwalker_SettingSubtitlePid", resourceCulture);
             }
         }
+                /// <summary>
+        ///   Looks up a localized string similar to Show window icon in results.
+        /// </summary>
+        public static string wox_plugin_windowwalker_SettingUseWindowIconInResults {
+            get {
+                return ResourceManager.GetString("wox_plugin_windowwalker_SettingUseWindowIconInResults", resourceCulture);
+            }
+        }
     }
 }

@@ -70,6 +70,11 @@ namespace Microsoft.Plugin.WindowWalker.Components
         /// </summary>
         internal bool HideExplorerSettingInfo { get; private set; }
 
+                /// <summary>
+        /// Gets a value indicating whether we show the window icon in the search results or not.
+        /// </summary>
+        internal bool UseWindowIconInResults { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowWalkerSettings"/> class.
         /// Private constructor to make sure there is never more than one instance of this class
@@ -161,6 +166,12 @@ namespace Microsoft.Plugin.WindowWalker.Components
                     DisplayDescription = Resources.wox_plugin_windowwalker_SettingExplorerSettingInfo_Description,
                     Value = false,
                 },
+                new PluginAdditionalOption
+                {
+                    Key = nameof(UseWindowIconInResults),
+                    DisplayLabel = Resources.wox_plugin_windowwalker_SettingUseWindowIconInResults,
+                    Value = true,
+                }
             };
 
             return optionList;

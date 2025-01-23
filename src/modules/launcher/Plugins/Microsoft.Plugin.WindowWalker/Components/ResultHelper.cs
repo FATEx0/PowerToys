@@ -60,7 +60,12 @@ namespace Microsoft.Plugin.WindowWalker.Components
             return new Result
             {
                 Title = searchResult.Result.Title,
-                IcoPath = icon,
+                IcoPath = WindowWalkerSettings.Instance.UseWindowIconInResults ? string.Empty : icon,
+                Icon = WindowWalkerSettings.Instance.UseWindowIconInResults ? () =>
+                    {
+                        return x.Result.WindowIcon ?? x.Result.Process.ProcessIcon;
+                                            }
+                    : null,
                 SubTitle = GetSubtitle(searchResult.Result),
                 ContextData = searchResult.Result,
                 Action = c =>
