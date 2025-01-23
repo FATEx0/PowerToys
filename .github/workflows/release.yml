@@ -38,7 +38,7 @@ jobs:
 
 
     - name: Build Solution (Release x64)
-      run: msbuild PowerToys.sln /p:Configuration=Release /p:Platform=x64 /p:RestorePackages=false /p:AdditionalOptions="/utf-8 /I$env:GITHUB_WORKSPACE\deps\fmt\include"
+      run: msbuild PowerToys.sln /p:Configuration=Release /p:Platform=x64 /p:RestorePackages=false /p:AdditionalOptions="/utf-8 /I$env:GITHUB_WORKSPACE\deps\fmt\include\fmt"
 
     - name: Build Prerequisite Tools
       run: |
