@@ -11,6 +11,11 @@
 #endif
 
 #include "fmt/os.h"
+#include <string_view>    // For wstring_view
+#include <stdexcept>      // For exceptions
+#include <system_error>   // For error_category
+
+using wstring_view = std::wstring_view;
 
 #ifndef FMT_MODULE
 #  include <climits>
@@ -67,7 +72,11 @@ using rwresult = int;
 // On Windows the count argument to read and write is unsigned, so convert
 // it from size_t preventing integer overflow.
 constexpr auto convert_rwcount(int result) -> unsigned {
-  return count <= UINT_MAX ? static_cast<unsigned>(count) : UINT_MAX;
+  const auto count = static_cast<unsigned>(result);
+  if (result < 0) {
+    throw std::system_error(errno, std::generic_category());
+  }
+  return count;
 }
 #elif FMT_USE_FCNTL
 // Return type of read and write functions.
@@ -89,8 +98,14 @@ class system_message {
   unsigned long result_;
   wchar_t* message_;
 
-  constexpr bool system_message::is_whitespace(wstring_view s) {
-    return c == L' ' || c == L'\n' || c == L'\r' || c == L'\t' || c == L'\0';
+  static constexpr bool is_whitespace(wstring_view s) {
+    for (wchar_t c : s) {
+      if (c == L' ' || c == L'\t' || c == L'\n' || 
+          c == L'\r' || c == L'\f' || c == L'\v') {
+        return true;
+      }
+    }
+    return false;
   }
 
  public:
