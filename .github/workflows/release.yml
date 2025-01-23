@@ -51,10 +51,22 @@ jobs:
         copy "installer\PowerToysSetup\x64\Release\PowerToysSetup.exe" artifacts\
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-binaries
-        path: artifacts/*
+        path: artifacts/**
+        retention-days: 7  # Optional: Set artifact retention period
+
+  release:
+    needs: build-and-release
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: release-binaries
+        path: ./artifacts
 
     - name: Create GitHub Release
       id: create_release
@@ -75,4 +87,14 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./artifacts/PowerToysSetup.msi
         asset_name: PowerToysSetup-${{ github.ref }}.msi
+        asset_content_type: application/octet-stream
+
+    - name: Upload EXE Installer
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifacts/PowerToysSetup.exe
+        asset_name: PowerToysSetup-${{ github.ref }}.exe
         asset_content_type: application/octet-stream
