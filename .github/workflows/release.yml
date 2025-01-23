@@ -18,11 +18,6 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install WiX Toolset
-      run: |
-        choco install wixtoolset -y
-        refreshenv  # Load updated environment variables
-
     - name: Verify WiX Installation
       run: |
         echo "WIX_PATH: $env:WIX_PATH"
