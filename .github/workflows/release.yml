@@ -22,6 +22,11 @@ jobs:
         with:
           dotnet-version: '7.0.x' # Adjust version as needed
           
+      - name: Restore NuGet packages
+        run: |
+          dotnet restore PowerToys.sln
+          msbuild -t:restore PowerToys.sln
+          
       - name: Build
         run: |
           msbuild PowerToys.sln /p:Configuration=Release /p:Platform=x64
