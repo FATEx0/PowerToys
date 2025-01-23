@@ -23,14 +23,23 @@ jobs:
         echo "WIX_PATH: $env:WIX_PATH"
         & "$env:WIX_PATH\heat.exe" -?  # Use correct help syntax
 
+    - name: Build fmt library  # <-- Fix indentation here
+      run: |
+         cd deps/fmt
+         mkdir build
+         cd build
+         cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..
+         cmake --build . --config Release
+
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
     - name: Restore NuGet packages
       run: nuget restore PowerToys.sln
 
+
     - name: Build Solution (Release x64)
-      run: msbuild PowerToys.sln /p:Configuration=Release /p:Platform=x64 /p:RestorePackages=false
+      run: msbuild PowerToys.sln /p:Configuration=Release /p:Platform=x64 /p:RestorePackages=false /p:AdditionalOptions="/utf-8 /I$(Build.SourcesDirectory)\deps\fmt\include"
 
     - name: Build Prerequisite Tools
       run: |

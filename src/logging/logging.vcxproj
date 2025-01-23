@@ -46,24 +46,52 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <DebugInformationFormat>None</DebugInformationFormat>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB;SPDLOG_WCHAR_FILENAMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
-    </ClCompile>
-    <Lib>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-    </Lib>
-  </ItemDefinitionGroup>
+<ItemDefinitionGroup>
+  <ClCompile>
+    <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+    <DebugInformationFormat>None</DebugInformationFormat>
+    <ExceptionHandling>Sync</ExceptionHandling>
+    <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+    <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    <WarningLevel>Level4</WarningLevel>
+    <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB;SPDLOG_WCHAR_FILENAMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    <ObjectFileName>$(IntDir)</ObjectFileName>
+    <FunctionLevelLinking>true</FunctionLevelLinking>
+    <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+  </ClCompile>
+  <Lib>
+    <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+  </Lib>
+</ItemDefinitionGroup>
+
+<!-- New configuration (applies ONLY to Release|x64) -->
+<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ClCompile>
+    <!-- Keep existing properties from above -->
+    <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+    <DebugInformationFormat>None</DebugInformationFormat>
+    <ExceptionHandling>Sync</ExceptionHandling>
+    <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+    <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    <WarningLevel>Level4</WarningLevel>
+    
+    <!-- Modified Preprocessor Definitions -->
+    <PreprocessorDefinitions>SPDLOG_FMT_EXTERNAL;WIN32;_WINDOWS;SPDLOG_COMPILED_LIB;SPDLOG_WCHAR_FILENAMES;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    
+    <!-- New UTF-8 Encoding Flag -->
+    <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    
+    <!-- Existing File Properties -->
+    <ObjectFileName>$(IntDir)</ObjectFileName>
+    <FunctionLevelLinking>true</FunctionLevelLinking>
+    <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+  </ClCompile>
+  <Lib>
+    <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+  </Lib>
+</ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="$(ProjectDir)..\..\deps\spdlog\src\spdlog.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\deps\spdlog\src\stdout_sinks.cpp" />
@@ -71,7 +99,6 @@
     <ClCompile Include="$(ProjectDir)..\..\deps\spdlog\src\file_sinks.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\deps\spdlog\src\async.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\deps\spdlog\src\cfg.cpp" />
-    <ClCompile Include="$(ProjectDir)..\..\deps\spdlog\src\fmt.cpp" />
     <ClInclude Include="$(ProjectDir)..\..\deps\spdlog\include\spdlog\async.h" />
     <ClInclude Include="$(ProjectDir)..\..\deps\spdlog\include\spdlog\async_logger-inl.h" />
     <ClInclude Include="$(ProjectDir)..\..\deps\spdlog\include\spdlog\async_logger.h" />
